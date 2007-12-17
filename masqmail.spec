@@ -48,7 +48,6 @@ Requires(preun):		rpm-helper
 Requires(post):		rpm-helper
 
 BuildRequires:	glib-devel >= 1.0
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %if %{with_LIBCRYPTO}
 BuildRequires:	libopenssl-devel
