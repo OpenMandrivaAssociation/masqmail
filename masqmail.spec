@@ -171,7 +171,7 @@ install -m 0744 %{SOURCE3} %buildroot/%{_sysconfdir}/rc.d/init.d/masqmail
 # Install alternatives:
 update-alternatives --install %{_sbindir}/sendmail sendmail-command %{_sbindir}/masqmail 20 \
         --slave %{_libdir}/sendmail sendmail-command-in_libdir %{_sbindir}/masqmail \
-        --slave %{_mandir}/man1/sendmail.1.bz2 sendmail-command-man %{_mandir}/man8/masqmail.8.bz2
+        --slave %{_mandir}/man1/sendmail.1.bz2 sendmail-command-man %{_mandir}/man8/masqmail.8*
 # Install service:
 %_post_service masqmail
 
