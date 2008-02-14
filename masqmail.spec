@@ -42,6 +42,7 @@ Patch0:		masqmail-Makefile_no_chown.patch.bz2
 
 License:	GPL
 Group:		System/Servers
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 Provides:	sendmail-command, mail-server
 Requires(preun):		rpm-helper
