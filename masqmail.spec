@@ -31,7 +31,7 @@
 Name:		%{name}
 Summary:	Offline Mail Transfert Agent
 Version:	%{version}
-Release:	%mkrel 11
+Release:	%mkrel 12
 Epoch:		1
 URL:		http://masqmail.cx/masqmail/
 Source0:	masqmail-%{version}.tar.bz2
