@@ -190,3 +190,80 @@ if [ $1 = 0 ]; then
 # Remove alternatives:
         update-alternatives --remove sendmail-command %{_sbindir}/masqmail
 fi
+
+
+%changelog
+* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 1:0.2.18-13mdv2011.0
++ Revision: 612837
+- the mass rebuild of 2010.1 packages
+
+* Mon Apr 19 2010 Funda Wang <fwang@mandriva.org> 1:0.2.18-12mdv2010.1
++ Revision: 536604
+- rebuild
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 1:0.2.18-11mdv2010.0
++ Revision: 429956
+- rebuild
+
+* Mon Jul 28 2008 Thierry Vignaud <tv@mandriva.org> 1:0.2.18-10mdv2009.0
++ Revision: 251892
+- rebuild
+- fix no-buildroot-tag
+
+* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 1:0.2.18-8mdv2008.1
++ Revision: 129743
+- kill re-definition of %%buildroot on Pixel's request
+- do not hardcode man pages extension
+
+  + Michael Scherer <misc@mandriva.org>
+    - Import masqmail
+
+
+
+
+
+* Mon May 01 2006 Michael Scherer <misc@mandriva.org> 1:0.2.18-8mdk
+- fix x86_64 build
+- clean rpmlint error
+
+* Sun Mar 19 2006 Michael Scherer <misc@mandriva.org> 1:0.2.18-7mdk
+- Rebuild for new openssl
+- use -q for setup
+- clean buildroot at install time
+- fix rpmbuildupdatability
+
+* Thu Jul 21 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 0.2.18-6mdk
+- complete sendmail-command alternative
+
+* Thu Jul 21 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 0.2.18-5mdk
+- fix alternative (Michael Reinsch)
+
+* Fri Jul  1 2005 Gaetan Lehmann <gaetan.lehmann@jouy.inra.fr> 0.2.18-4mdk
+- provides and alternative sendmail-command
+- use mkrel
+
+* Tue Feb 10 2004 Lenny Cartier <lenny@mandrakesoft.com> 0.2.18-3mdk
+- disable-resolver on amd64
+- close endif
+
+* Mon Sep 22 2003 Lenny Cartier <lenny@mandrakesoft.com> 0.2.18-2mdk
+- fix requires
+
+* Tue Dec 31 2002 Lenny Cartier <lenny@mandrakesoft.com> 0.2.18-1mdk
+- from Rémi Denis-Courmont <rdenis@simphalempin.com> :
+	- Resync with mainstream version
+	- Error templates moved to /usr/share
+	- Fixed mservdetect manpage path
+	- Optionnaly unused files removed from build root
+
+* Sun Nov 17 2002 Rémi Denis-Courmont <rdenis@simphalempin.com> 0.2.16-1mdk
+- Resync with mainstream version
+- MTA alternatives no longer removed when upgrading package
+
+* Sat Nov 09 2002 Rémi Denis-Courmont <rdenis@simphalempin.com> 0.2.15-1mdk
+- Resync with mainstream version
+
+* Sat Nov 02 2002 Rémi Denis-Courmont <rdenis@simphalempin.com> 0.2.14-1mdk
+- Specfile created for Mandrake
+- Init script created
+- New masqmail.conf and example.route created

@@ -1,5 +1,3 @@
 sources:
-  "masqmail-0.2.18.tar.bz2:"	97a2f5396a74a646a8e8842d47c5f457de641119
-  "masqmail-etc-init.d-masqmail:"	f25030861880825c4115fa1cd84759601168829c
-  "masqmail-etc-masqmail-example.route:"	bf4cf06b098f617d115a2f37d901b1d8133fd802
-  "masqmail-etc-masqmail-masqmail.conf:"	b0845159ff56befdfe3e21594082a2db488a1a38
+  "masqmail-0.2.18.tar.bz2": 97a2f5396a74a646a8e8842d47c5f457de641119
+  "masqmail-Makefile_no_chown.patch.bz2": 54a4c460e5247038c82796e3c627cff9bfb91ff8
