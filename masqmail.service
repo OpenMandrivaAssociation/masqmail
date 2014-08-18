@@ -1,0 +1,11 @@
+[Unit]
+Description=MasqMail - a light-weight offline SMTP server.
+After=network.target syslog.target remote-fs.target time-sync.target nss-lookup.target
+
+[Service]
+Type=forking
+EnvironmentFile=/etc/masqmail/masqmail.conf
+ExecStart=/usr/sbin/masqmail -bd
+
+[Install]
+WantedBy=multi-user.target  

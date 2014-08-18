@@ -1,10 +1,3 @@
-# masqmail.spec.  Generated from masqmail.spec.in by configure.
-# Mandrake GNU/Linux RPM specfile for MasqMail
-# $Id$
-#
-# Process this file with ./config.status --file=mandrake/masqmail.spec
-# once you have properly configured the source package.
-
 %define confdir		%{_sysconfdir}/masqmail
 %define spooldir	%{_var}/spool/masqmail
 %define logdir		%{_var}/log/masqmail
@@ -27,13 +20,13 @@
 Summary:	Offline Mail Transfert Agent
 Name:		masqmail
 Version:	0.2.18
-Release:	14
+Release:	16
 Epoch:		1
 License:	GPLv2+
 Group:		System/Servers
 Url:		http://masqmail.cx/masqmail/
-Source0:	masqmail-%{version}.tar.bz2
-Source3:	masqmail-etc-init.d-masqmail
+Source0:	%{name}-%{version}.tar.bz2
+Source3:	%{name}.service
 Source4:	masqmail-etc-masqmail-masqmail.conf
 Source5:	masqmail-etc-masqmail-example.route
 Patch0:		masqmail-Makefile_no_chown.patch.bz2
@@ -42,6 +35,9 @@ BuildRequires:	pkgconfig(glib)
 BuildRequires:	pkgconfig(openssl)
 %endif
 Requires(preun,post):	rpm-helper
+Requires(post): 	systemd-units
+Requires(preun): 	systemd-units
+Requires(postun): 	systemd-units
 Provides:	sendmail-command
 Provides:	mail-server
 
@@ -76,7 +72,7 @@ users's mail boxes. It replaces other MTAs such as Sendmail or Postfix.
 %config(noreplace) %{confdir}/example.get
 %endif
 %config(noreplace) %{confdir}/example.route
-%attr(0744, root, root) %config(noreplace) %{_sysconfdir}/rc.d/init.d/masqmail
+%{_unitdir}/%{name}.service
 
 %defattr(-, %{mailuser}, %{mailgroup}, 0755)
 %dir %{logdir}
@@ -90,12 +86,18 @@ users's mail boxes. It replaces other MTAs such as Sendmail or Postfix.
 update-alternatives --install %{_sbindir}/sendmail sendmail-command %{_sbindir}/masqmail 20 \
         --slave %{_libdir}/sendmail sendmail-command-in_libdir %{_sbindir}/masqmail \
         --slave %{_mandir}/man1/sendmail.1.bz2 sendmail-command-man %{_mandir}/man8/masqmail.8*
-# Install service:
-%_post_service masqmail
+
+if [ $1 -eq 1 ] ; then 
+    # Initial installation 
+    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
+fi
 
 %preun
-# Remove service:
-%_preun_service masqmail
+if [ $1 -eq 0 ] ; then
+    # Package removal, not upgrade
+    /bin/systemctl --no-reload disable %{name}.service > /dev/null 2>&1 || :
+    /bin/systemctl stop %{name}.service > /dev/null 2>&1 || :
+fi
 
 if [ $1 = 0 ]; then
 # Clean up spool:
@@ -106,6 +108,13 @@ if [ $1 = 0 ]; then
 	/bin/rm -f %{logdir}/*
 # Remove alternatives:
         update-alternatives --remove sendmail-command %{_sbindir}/masqmail
+fi
+
+%postun
+/bin/systemctl daemon-reload >/dev/null 2>&1 || :
+if [ $1 -ge 1 ] ; then
+    # Package upgrade, not uninstall
+    /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
 fi
 
 #----------------------------------------------------------------------------
@@ -149,16 +158,13 @@ CFGFLAGS="$CFGFLAGS --with-libcrypto"
 	--disable-resolver
 %endif
 
-
 %make
-
 
 %install
 %makeinstall_std
 
-# Init script:
-mkdir -p %{buildroot}%{_sysconfdir}/rc.d/init.d/
-install -m 0744 %{SOURCE3} %{buildroot}%{_sysconfdir}/rc.d/init.d/masqmail
+# systemd service:
+install -D -m 644 %{SOURCE3} %{buildroot}%{_unitdir}/%{name}.service
 
 # Configuration files:
 cp %{SOURCE4} %{buildroot}%{confdir}/masqmail.conf
@@ -176,4 +182,3 @@ cp %{SOURCE5} %{buildroot}%{confdir}/example.route
 	rm %{buildroot}%{_mandir}/man8/mservdetect.8*
 	rm %{buildroot}%{_bindir}/mservdetect
 %endif
-
