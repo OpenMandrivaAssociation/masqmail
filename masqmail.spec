@@ -20,7 +20,7 @@
 Summary:	Offline Mail Transfert Agent
 Name:		masqmail
 Version:	0.2.18
-Release:	16
+Release:	17
 Epoch:		1
 License:	GPLv2+
 Group:		System/Servers
