@@ -87,17 +87,10 @@ update-alternatives --install %{_sbindir}/sendmail sendmail-command %{_sbindir}/
         --slave %{_libdir}/sendmail sendmail-command-in_libdir %{_sbindir}/masqmail \
         --slave %{_mandir}/man1/sendmail.1.bz2 sendmail-command-man %{_mandir}/man8/masqmail.8*
 
-if [ $1 -eq 1 ] ; then 
-    # Initial installation 
-    /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
+%systemd_post %{name}.service
 
 %preun
-if [ $1 -eq 0 ] ; then
-    # Package removal, not upgrade
-    /bin/systemctl --no-reload disable %{name}.service > /dev/null 2>&1 || :
-    /bin/systemctl stop %{name}.service > /dev/null 2>&1 || :
-fi
+%systemd_preun %{name}.service
 
 if [ $1 = 0 ]; then
 # Clean up spool:
@@ -111,11 +104,7 @@ if [ $1 = 0 ]; then
 fi
 
 %postun
-/bin/systemctl daemon-reload >/dev/null 2>&1 || :
-if [ $1 -ge 1 ] ; then
-    # Package upgrade, not uninstall
-    /bin/systemctl try-restart %{name}.service >/dev/null 2>&1 || :
-fi
+%systemd_postun_with_restart %{name}.service
 
 #----------------------------------------------------------------------------
 
