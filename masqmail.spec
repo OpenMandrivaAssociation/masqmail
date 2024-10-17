@@ -24,7 +24,7 @@ Release:	18
 Epoch:		1
 License:	GPLv2+
 Group:		System/Servers
-Url:		http://masqmail.cx/masqmail/
+Url:		https://masqmail.cx/masqmail/
 Source0:	%{name}-%{version}.tar.bz2
 Source3:	%{name}.service
 Source4:	masqmail-etc-masqmail-masqmail.conf
