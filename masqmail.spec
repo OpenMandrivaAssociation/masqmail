@@ -30,6 +30,11 @@ Source3:	%{name}.service
 Source4:	masqmail-etc-masqmail-masqmail.conf
 Source5:	masqmail-etc-masqmail-example.route
 Patch0:		masqmail-Makefile_no_chown.patch.bz2
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(glib)
 %if %{with_LIBCRYPTO}
 BuildRequires:	pkgconfig(openssl)
